@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TLV Flights</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <h1>TLV Flights Dashboard</h1>
+    
+    <div>
+        <h2>Number of Flights from a Specific Country</h2>
+        <input type="text" id="countryInput" placeholder="Enter country name">
+        <button onclick="getFlightCount()">Get Count</button>
+        <p id="flightCount"></p>
+    </div>
+
+    <div>
+        <h2>Most Popular Destination</h2>
+        <button onclick="getPopularDestination()">Get Destination</button>
+        <p id="popularDestination"></p>
+    </div>
+
+    <div>
+        <h2>Quick Getaway Flights</h2>
+        <button onclick="getQuickGetaway()">Get Flights</button>
+        <p id="quickGetaway"></p>
+    </div>
+
+    <script src="/scripts.js"></script>
+</body>
+</html>
