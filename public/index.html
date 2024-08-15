@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TLV Flights</title>
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Flights Dashboard - TLV</h1>
+        </header>
+
+        <main>
+            <!-- Section for Number of Flights -->
+            <section class="row">
+                <button onclick="getFlightCount()">Number of flights (inbound & outbound)</button>
+                <h2 id="flightCount"></h2>
+            </section>
+
+            <!-- Section for Number of Outbound Flights -->
+            <section class="row">
+                <button onclick="getOutboundFlightCount()">Number of outbound flights</button>
+                <h2 id="outboundFlightCount"></h2>
+            </section>
+
+            <!-- Section for Number of Inbound Flights -->
+            <section class="row">
+                <button onclick="getInboundFlightCount()">Number of inbound flights</button>
+                <h2 id="inboundFlightCount"></h2>
+            </section>
+
+            <!-- Section for Number of Flights by Country -->
+            <section class="row">
+                <input type="text" id="countryInput" placeholder="Enter country name">
+                <button onclick="countFlightsByCountry()">Count Flights</button>
+                <div class="info">
+                    <h2 id="flightCountByCountry"></h2>
+                </div>
+            </section>
+
+            <!-- Section for Number of outbound Flights by Country -->
+            <section class="row">
+                <input type="text" id="outboundCountryInput" placeholder="Enter country name">
+                <button onclick="outboundCountFlightsByCountry()">Count Flights</button>
+                <div class="info">
+                    <h2 id="outboundFlightCountByCountry"></h2>
+                </div>
+            </section>
+
+            <!-- Section for Number of inbound Flights by Country -->
+            <section class="row">
+                <input type="text" id="inboundCountryInput" placeholder="Enter country name">
+                <button onclick="inboundCountFlightsByCountry()">Count Flights</button>
+                <div class="info">
+                    <h2 id="inboundFlightCountByCountry"></h2>
+                </div>
+            </section>
+
+            <!-- Section for Number of delayed Flights -->
+            <section class="row">
+                <button onclick="getDelayedFlightCount()">Number of delayed flights</button>
+                <h2 id="delayedFlightsCount"></h2>
+            </section>
+
+            <!-- Section for Most Popular Destination -->
+            <section class="row">
+                <button onclick="getPopularDestination()">Most popular destination</button>
+                <h2 id="popularDestination"></h2>
+            </section>
+
+            <!-- Section for Quick Getaway Flights -->
+            <section class="row">
+                <button onclick="getQuickGetaway()">Quick Getaway</button>
+                <h2 id="quickGetaway"></h2>
+            </section>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -59,5 +59,5 @@ router.get('/flights/destination/popular', mostPopularDestination);
 router.get('/flights/getaway', findQuickGetawayFlights);
 
 
-// Export the router so it can be used in index.js
+// Export the router so it can be used in app.js
 module.exports = router;
