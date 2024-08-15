@@ -11,9 +11,13 @@ const RESOURCE_ID = 'e83f763b-b7d7-479e-b172-ae981ddc6de5';
 // Helper function to fetch flight data from the API
 // This function makes a GET request to the API and returns the flight records
 const fetchData = async () => {
-    const url = `${BASE_URL}?resource_id=${RESOURCE_ID}&limit=300`;
-    const response = await axios.get(url);
-    return response.data.result.records;
+    try {
+        const url = `${BASE_URL}?resource_id=${RESOURCE_ID}&limit=300`;
+        const response = await axios.get(url);
+        return response.data.result.records;
+    } catch (error) {
+        throw new Error('Failed to fetch flight data');
+    }
 };
 
 
@@ -24,7 +28,7 @@ const countFlights = async (req, res) => {
         const flights = await fetchData(); // Fetch all flight data
         res.json({ count: flights.length }); // Respond with the total count of flights
     } catch (error) {
-        res.status(500).json({ error: 'Failed to fetch flight data' });
+        res.status(error.response.status).json({ error: error.response.status }); // Handle any errors
     }
 };
 
@@ -37,7 +41,7 @@ const countOutboundFlights = async (req, res) => {
         const outboundFlights = flights.filter(flight => flight.CHCKZN); // Filter for outbound flights
         res.json({ count: outboundFlights.length }); // Respond with the count of outbound flights
     } catch (error) {
-        res.status(500).json({ error: 'Failed to fetch flight data' }); // Handle any errors
+        res.status(error.response.status).json({ error: error.response.status }); // Handle any errors
     }
 };
 
@@ -50,13 +54,13 @@ const countInboundFlights = async (req, res) => {
         const inboundFlights = flights.filter(flight => !flight.CHCKZN); // Filter for inbound flights
         res.json({ count: inboundFlights.length }); // Respond with the count of inbound flights
     } catch (error) {
-        res.status(500).json({ error: 'Failed to fetch flight data' }); // Handle any errors
+        res.status(error.response.status).json({ error: error.response.status }); // Handle any errors
     }
 };
 
 
 // Controller function to count flights (inbound and outbound) from a specific country
-// This function is called when a POST request is made to /api/flights/country/count
+// This function is called when a GET request is made to /api/flights/country/count
 // accept the country as a query parameter
 const countFlightsFromCountry = async (req, res) => {
     try {
@@ -70,13 +74,13 @@ const countFlightsFromCountry = async (req, res) => {
 
         res.json({ count: countryFlights.length }); // Respond with the count of flights from the specified country
     } catch (error) {
-        res.status(500).json({ error: 'Failed to fetch flight data' }); // Handle any errors
+        res.status(error.response.status).json({ error: error.response.status }); // Handle any errors
     }
 };
 
 
 // Controller function to count outbound flights from a specific country
-// This function is called when a POST request is made to /api/flights/country/outbound/count
+// This function is called when a GET request is made to /api/flights/country/outbound/count
 const countOutboundFlightsFromCountry = async (req, res) => {
     try {
         const country = req.query.country; // Get the country name from query parameters
@@ -89,13 +93,13 @@ const countOutboundFlightsFromCountry = async (req, res) => {
 
         res.json({ count: outboundFlights.length }); // Respond with the count of outbound flights from the specified country
     } catch (error) {
-        res.status(500).json({ error: 'Failed to fetch flight data' }); // Handle any errors
+        res.status(error.response.status).json({ error: error.response.status }); // Handle any errors
     }
 };
 
 
 // Controller function to count inbound flights from a specific country
-// This function is called when a POST request is made to /api/flights/country/inbound/count
+// This function is called when a GET request is made to /api/flights/country/inbound/count
 const countInboundFlightsFromCountry = async (req, res) => {
     try {
         const country = req.query.country; // Get the country name from query parameters
@@ -108,7 +112,7 @@ const countInboundFlightsFromCountry = async (req, res) => {
 
         res.json({ count: inboundFlights.length }); // Respond with the count of inbound flights from the specified country
     } catch (error) {
-        res.status(500).json({ error: 'Failed to fetch flight data' }); // Handle any errors
+        res.status(error.response.status).json({ error: error.response.status }); // Handle any errors
     }
 };
 
@@ -132,7 +136,7 @@ const countDelayedFlights = async (req, res) => {
 
         res.json({ count: delayedFlights.length }); // Respond with the count of delayed flights
     } catch (error) {
-        res.status(500).json({ error: 'Failed to fetch flight data' }); // Handle any errors
+        res.status(error.response.status).json({ error: error.response.status }); // Handle any errors
     }
 };
 
@@ -160,7 +164,7 @@ const mostPopularDestination = async (req, res) => {
 
         res.json({ city: mostPopular.city || 'No data available' }); // Respond with the most popular city
     } catch (error) {
-        res.status(500).json({ error: 'Failed to fetch flight data' }); // Handle any errors
+        res.status(error.response.status).json({ error: error.response.status }); // Handle any errors
     }
 };
 
@@ -199,7 +203,7 @@ const findQuickGetawayFlights = async (req, res) => {
 
         res.json(result); // Respond with the found flight pair or an empty object
     } catch (error) {
-        res.status(500).json({ error: 'Failed to fetch flight data' }); // Handle any errors
+        res.status(error.response.status).json({ error: error.response.status }); // Handle any errors
     }
 };
 

@@ -30,7 +30,7 @@ router.get('/flights/outbound/count', countOutboundFlights);
 router.get('/flights/inbound/count', countInboundFlights);
 
 // Define a route for counting flights (inbound and outbound) from a specific country
-// When a POST request is made to /api/flights/country/count, the countFlightsFromCountry function is called
+// When a GET request is made to /api/flights/country/count, the countFlightsFromCountry function is called
 router.get('/flights/country/count', countFlightsFromCountry);
 
 
