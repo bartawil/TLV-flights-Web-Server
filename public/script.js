@@ -1,4 +1,4 @@
-const apiUrl = 'http://localhost:3000/api';
+const apiUrl = window.location.origin + '/api';
 console.log('scripts.js is loaded');
 
 // Function to get total flight count
