@@ -26,7 +26,7 @@ const fetchData = async () => {
 const countFlights = async (req, res) => {
     try {
         const flights = await fetchData(); // Fetch all flight data
-        res.json({ count: flights.length }); // Respond with the total count of flights
+        res.json(flights.length); // Respond with the total count of flights
     } catch (error) {
         res.status(error.response.status).json({ error: error.response.status }); // Handle any errors
     }
@@ -39,7 +39,7 @@ const countOutboundFlights = async (req, res) => {
     try {
         const flights = await fetchData(); // Fetch all flight data
         const outboundFlights = flights.filter(flight => flight.CHCKZN); // Filter for outbound flights
-        res.json({ count: outboundFlights.length }); // Respond with the count of outbound flights
+        res.json(outboundFlights.length); // Respond with the count of outbound flights
     } catch (error) {
         res.status(error.response.status).json({ error: error.response.status }); // Handle any errors
     }
@@ -52,7 +52,7 @@ const countInboundFlights = async (req, res) => {
     try {
         const flights = await fetchData(); // Fetch all flight data
         const inboundFlights = flights.filter(flight => !flight.CHCKZN); // Filter for inbound flights
-        res.json({ count: inboundFlights.length }); // Respond with the count of inbound flights
+        res.json(inboundFlights.length); // Respond with the count of inbound flights
     } catch (error) {
         res.status(error.response.status).json({ error: error.response.status }); // Handle any errors
     }
@@ -72,7 +72,7 @@ const countFlightsFromCountry = async (req, res) => {
         const flights = await fetchData(); // Fetch all flight data
         const countryFlights = flights.filter(flight => flight.CHLOCCT === country); // Filter flights by country name
 
-        res.json({ count: countryFlights.length }); // Respond with the count of flights from the specified country
+        res.json(countryFlights.length); // Respond with the count of flights from the specified country
     } catch (error) {
         res.status(error.response.status).json({ error: error.response.status }); // Handle any errors
     }
@@ -91,7 +91,7 @@ const countOutboundFlightsFromCountry = async (req, res) => {
         const flights = await fetchData(); // Fetch all flight data
         const outboundFlights = flights.filter(flight => flight.CHLOCCT === country && flight.CHCKZN); // Filter outbound flights by country name
 
-        res.json({ count: outboundFlights.length }); // Respond with the count of outbound flights from the specified country
+        res.json(outboundFlights.length); // Respond with the count of outbound flights from the specified country
     } catch (error) {
         res.status(error.response.status).json({ error: error.response.status }); // Handle any errors
     }
@@ -110,7 +110,7 @@ const countInboundFlightsFromCountry = async (req, res) => {
         const flights = await fetchData(); // Fetch all flight data
         const inboundFlights = flights.filter(flight => flight.CHLOCCT === country && !flight.CHCKZN); // Filter inbound flights by country name
 
-        res.json({ count: inboundFlights.length }); // Respond with the count of inbound flights from the specified country
+        res.json(inboundFlights.length); // Respond with the count of inbound flights from the specified country
     } catch (error) {
         res.status(error.response.status).json({ error: error.response.status }); // Handle any errors
     }
@@ -134,7 +134,7 @@ const countDelayedFlights = async (req, res) => {
             isDelayed(flight.CHSTOL, flight.CHPTOL)
         );
 
-        res.json({ count: delayedFlights.length }); // Respond with the count of delayed flights
+        res.json(delayedFlights.length); // Respond with the count of delayed flights
     } catch (error) {
         res.status(error.response.status).json({ error: error.response.status }); // Handle any errors
     }
@@ -162,7 +162,7 @@ const mostPopularDestination = async (req, res) => {
         const mostPopular = Object.entries(destinationCounts)
             .reduce((max, [city, count]) => count > max.count ? { city, count } : max, { city: null, count: 0 });
 
-        res.json({ city: mostPopular.city || 'No data available' }); // Respond with the most popular city
+        res.json(mostPopular.city || 'No data available'); // Respond with the most popular city
     } catch (error) {
         res.status(error.response.status).json({ error: error.response.status }); // Handle any errors
     }

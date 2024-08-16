@@ -12,52 +12,52 @@ The web server supports the following APIs:
 - **Endpoint**: `/api/flights/count`
 - **Method**: `GET`
 - **Description**: Returns the total number of flights (both inbound and outbound).
-- **Response Example**: `{ "count": 192 }`
+- **Response Example**: `192`
 
 ### 2. Count Outbound Flights
 - **Endpoint**: `/api/flights/outbound/count`
 - **Method**: `GET`
 - **Description**: Returns the number of outbound flights.
-- **Response Example**: `{ "count": 64 }`
+- **Response Example**: `64`
 
 ### 3. Count Inbound Flights
 - **Endpoint**: `/api/flights/inbound/count`
 - **Method**: `GET`
 - **Description**: Returns the number of inbound flights.
-- **Response Example**: `{ "count": 128 }`
+- **Response Example**: `128`
 
 ### 4. Count Flights from a Specific Country (Inbound & Outbound)
 - **Endpoint**: `/api/flights/country/count`
 - **Method**: `GET`
 - **Query Parameter**: `country=<Country Name>`
 - **Description**: Returns the number of flights (inbound and outbound) from the specified country.
-- **Response Example**: `{ "count": 68 }`
+- **Response Example**: `68`
 
 ### 5. Count Outbound Flights from a Specific Country
 - **Endpoint**: `/api/flights/country/outbound/count`
 - **Method**: `GET`
 - **Query Parameter**: `country=<Country Name>`
 - **Description**: Returns the number of outbound flights from the specified country.
-- **Response Example**: `{ "count": 16 }`
+- **Response Example**: `16`
 
 ### 6. Count Inbound Flights from a Specific Country
 - **Endpoint**: `/api/flights/country/inbound/count`
 - **Method**: `GET`
 - **Query Parameter**: `country=<Country Name>`
 - **Description**: Returns the number of inbound flights from the specified country.
-- **Response Example**: `{ "count": 52 }`
+- **Response Example**: `52`
 
 ### 7. Count Delayed Flights
 - **Endpoint**: `/api/flights/delayed/count`
 - **Method**: `GET`
 - **Description**: Returns the number of delayed flights.
-- **Response Example**: `{ "count": 200 }`
+- **Response Example**: `200`
 
 ### 8. Most Popular Destination
 - **Endpoint**: `/api/flights/destination/popular`
 - **Method**: `GET`
 - **Description**: Returns the city with the highest number of outbound flights.
-- **Response Example**: `{ "city": "AMSTERDAM" }`
+- **Response Example**: `"AMSTERDAM"`
 
 ### 9. Quick Getaway Flights
 - **Endpoint**: `/api/flights/getaway`
@@ -67,7 +67,7 @@ The web server supports the following APIs:
 
 ## Requirements
 
-- **Language**: Node.js (v14 and up) or Java (v8 and up)
+- **Language**: Node.js
 - **Port**: 8080, 3000
 
 ## Running the Server Locally

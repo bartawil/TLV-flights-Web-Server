@@ -7,7 +7,7 @@ function getFlightCount() {
     fetch(`${apiUrl}/flights/count`)
         .then(response => response.json())
         .then(data => {
-            document.getElementById('flightCount').innerText = `Total number of flights: ${data.count}`;
+            document.getElementById('flightCount').innerText = `Total number of flights: ${data}`;
         })
         .catch(error => console.error('Error fetching flight count:', error));
 }
@@ -18,7 +18,7 @@ function getOutboundFlightCount() {
     fetch(`${apiUrl}/flights/outbound/count`)
         .then(response => response.json())
         .then(data => {
-            document.getElementById('outboundFlightCount').innerText = `Number of outbound flights: ${data.count}`;
+            document.getElementById('outboundFlightCount').innerText = `Number of outbound flights: ${data}`;
         })
         .catch(error => console.error('Error fetching outbound flight count:', error));
 }
@@ -30,7 +30,7 @@ function getInboundFlightCount() {
     fetch(`${apiUrl}/flights/inbound/count`)
         .then(response => response.json())
         .then(data => {
-            document.getElementById('inboundFlightCount').innerText = `Number of inbound flights: ${data.count}`;
+            document.getElementById('inboundFlightCount').innerText = `Number of inbound flights: ${data}`;
         })
         .catch(error => console.error('Error fetching inbound flight count:', error));
 }
@@ -47,7 +47,7 @@ async function countFlightsByCountry() {
         const response = await fetch(`${apiUrl}/flights/country/count?country=${country}`);
         const data = await response.json();
         if (response.ok) {
-            document.getElementById('flightCountByCountry').innerText = `Number of flights from country: ${data.count}`;
+            document.getElementById('flightCountByCountry').innerText = `Number of flights from country: ${data}`;
         } else {
             alert(data.error);
         }
@@ -68,7 +68,7 @@ async function outboundCountFlightsByCountry() {
         const response = await fetch(`${apiUrl}/flights/country/outbound/count?country=${country}`);
         const data = await response.json();
         if (response.ok) {
-            document.getElementById('outboundFlightCountByCountry').innerText = `Number of outbound flights from country: ${data.count}`;
+            document.getElementById('outboundFlightCountByCountry').innerText = `Number of outbound flights from country: ${data}`;
         } else {
             alert(data.error);
         }
@@ -89,7 +89,7 @@ async function inboundCountFlightsByCountry() {
         const response = await fetch(`${apiUrl}/flights/country/inbound/count?country=${country}`);
         const data = await response.json();
         if (response.ok) {
-            document.getElementById('inboundFlightCountByCountry').innerText = `Number of inbound flights from country: ${data.count}`;
+            document.getElementById('inboundFlightCountByCountry').innerText = `Number of inbound flights from country: ${data}`;
         } else {
             alert(data.error);
         }
@@ -104,7 +104,7 @@ function getDelayedFlightCount() {
     fetch(`${apiUrl}/flights/delayed/count`)
         .then(response => response.json())
         .then(data => {
-            document.getElementById('delayedFlightsCount').innerText = `Number of delayed flights: ${data.count}`;
+            document.getElementById('delayedFlightsCount').innerText = `Number of delayed flights: ${data}`;
         })
         .catch(error => console.error('Error fetching delayed flight count:', error));
 }
@@ -114,7 +114,7 @@ function getPopularDestination() {
     fetch(`${apiUrl}/flights/destination/popular`)
         .then(response => response.json())
         .then(data => {
-            document.getElementById('popularDestination').innerText = `Most popular destination: ${data.city}`;
+            document.getElementById('popularDestination').innerText = `Most popular destination: ${data}`;
         })
         .catch(error => console.error('Error fetching popular destination:', error));
 }
