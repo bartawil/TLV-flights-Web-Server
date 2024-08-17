@@ -81,7 +81,7 @@ const countInboundFlights = async (req, res) => {
 const countFlightsFromCountry = async (req, res) => {
     try {
         // Sanitize input and get the country name
-        const country = validator.escape(req.query.country || '');
+        const country = validator.escape(req.query.country || '').toUpperCase();
         if (!country) {
             return res.status(400).json({ error: 'Country name is required' });
         }
@@ -106,7 +106,7 @@ const countFlightsFromCountry = async (req, res) => {
 const countOutboundFlightsFromCountry = async (req, res) => {
     try {
         // Sanitize input and get the country name
-        const country = validator.escape(req.query.country || '');
+        const country = validator.escape(req.query.country || '').toUpperCase();
         if (!country) {
             return res.status(400).json({ error: 'Country name is required' });
         }
@@ -131,7 +131,7 @@ const countOutboundFlightsFromCountry = async (req, res) => {
 const countInboundFlightsFromCountry = async (req, res) => {
     try {
         // Sanitize input and get the country name
-        const country = validator.escape(req.query.country || '');
+        const country = validator.escape(req.query.country || '').toUpperCase();
         if (!country) {
             return res.status(400).json({ error: 'Country name is required' });
         }

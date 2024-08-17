@@ -23,6 +23,9 @@ app.use('/api', routes);
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Start the server and listen on the specified port
-app.listen(PORT, () => {
+server = app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
+
+
+module.exports = { app, server };
