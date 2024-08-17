@@ -4,8 +4,6 @@ const axios = require('axios');
 const { BASE_URL, CACHE_TTL, COUNTRIES_SET } = require('../config/constants');
 // Import the NodeCache module to cache the flight data
 const NodeCache = require('node-cache');
-// Import the validator module to validate the input
-const validator = require('validator');
 
 
 // Create a new cache instance
@@ -80,14 +78,9 @@ const countInboundFlights = async (req, res) => {
 // accept the country as a query parameter
 const countFlightsFromCountry = async (req, res) => {
     try {
-        // Sanitize input and get the country name
-        const country = validator.escape(req.query.country || '').toUpperCase();
+        const country = req.query.country ? req.query.country.toUpperCase() : '';
         if (!country) {
             return res.status(400).json({ error: 'Country name is required' });
-        }
-
-        if (!COUNTRIES_SET.has(country)) {
-            return res.status(400).json({ error: 'Invalid country name' });
         }
 
         const flights = await fetchData(); // Fetch all flight data
@@ -105,14 +98,9 @@ const countFlightsFromCountry = async (req, res) => {
 // This function is called when a GET request is made to /api/flights/country/outbound/count
 const countOutboundFlightsFromCountry = async (req, res) => {
     try {
-        // Sanitize input and get the country name
-        const country = validator.escape(req.query.country || '').toUpperCase();
+        const country = req.query.country ? req.query.country.toUpperCase() : '';
         if (!country) {
             return res.status(400).json({ error: 'Country name is required' });
-        }
-
-        if (!COUNTRIES_SET.has(country)) {
-            return res.status(400).json({ error: 'Invalid country name' });
         }
 
         const flights = await fetchData(); // Fetch all flight data
@@ -130,14 +118,9 @@ const countOutboundFlightsFromCountry = async (req, res) => {
 // This function is called when a GET request is made to /api/flights/country/inbound/count
 const countInboundFlightsFromCountry = async (req, res) => {
     try {
-        // Sanitize input and get the country name
-        const country = validator.escape(req.query.country || '').toUpperCase();
+        const country = req.query.country ? req.query.country.toUpperCase() : '';
         if (!country) {
             return res.status(400).json({ error: 'Country name is required' });
-        }
-
-        if (!COUNTRIES_SET.has(country)) {
-            return res.status(400).json({ error: 'Invalid country name' });
         }
 
         const flights = await fetchData(); // Fetch all flight data

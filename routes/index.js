@@ -4,6 +4,9 @@ const express = require('express');
 // Create a new router instance
 const router = express.Router();
 
+// Import the sanitizeQuery middleware function to sanitize the query parameters
+const sanitizeQuery = require('../middleware/sanitizeQuery');
+
 // Import the functions that handle the API logic from flightsController.js
 const {
     countFlights,
@@ -16,6 +19,10 @@ const {
     mostPopularDestination,
     findQuickGetawayFlights
 } = require('../controllers/flightsController');
+
+// Apply middleware
+router.use(sanitizeQuery);
+
 
 // Define a route for counting all flights (inbound and outbound)
 // When a GET request is made to /api/flights/count, the countFlights function is called
