@@ -4,14 +4,14 @@ const express = require('express');
 // Import the routes defined in routes/index.js
 const routes = require('./routes');
 
-// Initialize the Express application
-const app = express();
-
-// Define the port the server will run on
-const port = process.env.PORT || 3000;
-
 // Import the path module to work with file and directory paths
 const path = require('path');
+
+// Import the PORT constant from the config/constants.js file
+const { PORT } = require('./config/constants');
+
+// Initialize the Express application
+const app = express();
 
 // Middleware to parse incoming JSON requests
 app.use(express.json());
@@ -23,6 +23,6 @@ app.use('/api', routes);
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Start the server and listen on the specified port
-app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
 });

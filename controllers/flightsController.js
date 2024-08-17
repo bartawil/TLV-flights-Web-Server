@@ -1,23 +1,34 @@
 // Import the axios module to make HTTP requests
 const axios = require('axios');
+// Import the BASE_URL, CACHE_TTL constant from the config/constants.js file
+const { BASE_URL, CACHE_TTL } = require('../config/constants');
+// Import the NodeCache module to cache the flight data
+const NodeCache = require('node-cache');
 
-// Define the base URL for the TLV flights API
-const BASE_URL = 'https://data.gov.il/api/3/action/datastore_search';
 
-// Define the resource ID for the specific dataset we're interested in
-const RESOURCE_ID = 'e83f763b-b7d7-479e-b172-ae981ddc6de5';
-
+// Create a new cache instance
+const cache = new NodeCache();
 
 // Helper function to fetch flight data from the API
 // This function makes a GET request to the API and returns the flight records
 const fetchData = async () => {
-    try {
-        const url = `${BASE_URL}?resource_id=${RESOURCE_ID}&limit=300`;
-        const response = await axios.get(url);
-        return response.data.result.records;
-    } catch (error) {
-        throw new Error('Failed to fetch flight data');
+    // Check if the data is in the cache
+    let flights = cache.get('flightsData');
+
+    if (!flights) {
+        // If not in cache, fetch from the API
+        try {
+            const response = await axios.get(BASE_URL);
+            const data = response.data.result;
+            flights = data.records;
+
+            // Store the fetched data in the cache
+            cache.set('flightsData', flights, CACHE_TTL);
+        } catch (error) {
+            throw new Error('Failed to fetch flight data');
+        }
     }
+    return flights;   
 };
 
 

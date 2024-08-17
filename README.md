@@ -65,6 +65,15 @@ The web server supports the following APIs:
 - **Description**: Returns a pair of flights (one departing from Israel and one arriving in Israel) that someone can take for a quick getaway. If no such flights are found, returns an empty object.
 - **Response Example**: `{ "departure": "LX2526", "arrival": "LX257" }` or `{}`
 
+## Caching Strategy
+
+To improve performance and reduce the load on the external API, a caching mechanism is used for storing flight data. The cache is refreshed every 5 minutes. Here’s why a 5-minute TTL (Time-To-Live) was chosen:
+
+- **Data Freshness**: The external API updates every 15 minutes. A 5-minute TTL ensures that the cached data is sufficiently fresh, providing users with relatively up-to-date information while avoiding stale data.
+- **Efficiency and Resource Usage**: A 5-minute TTL strikes a balance between data freshness and efficient use of server and network resources. It helps in reducing the frequency of API calls and processing overhead compared to a shorter TTL.
+- **Handling Timing Issues**: A TTL of 5 minutes provides a buffer to handle potential timing issues and delays in data availability, ensuring that the cache is updated regularly but not excessively.
+By using a 5-minute TTL, we ensure that users receive reasonably current flight information while minimizing the impact on server performance and external API usage
+
 ## Requirements
 
 - **Language**: Node.js
