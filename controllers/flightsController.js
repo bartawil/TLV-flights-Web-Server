@@ -1,9 +1,11 @@
 // Import the axios module to make HTTP requests
 const axios = require('axios');
-// Import the BASE_URL, CACHE_TTL constant from the config/constants.js file
-const { BASE_URL, CACHE_TTL } = require('../config/constants');
+// Import the BASE_URL, CACHE_TTL, COUNTRIES_SET constant from the config/constants.js file
+const { BASE_URL, CACHE_TTL, COUNTRIES_SET } = require('../config/constants');
 // Import the NodeCache module to cache the flight data
 const NodeCache = require('node-cache');
+// Import the validator module to validate the input
+const validator = require('validator');
 
 
 // Create a new cache instance
@@ -25,7 +27,8 @@ const fetchData = async () => {
             // Store the fetched data in the cache
             cache.set('flightsData', flights, CACHE_TTL);
         } catch (error) {
-            throw new Error('Failed to fetch flight data');
+            console.error('Error fetching flight count:', error);
+            res.status(500).json({ error: 'Internal server error' });
         }
     }
     return flights;   
@@ -39,7 +42,8 @@ const countFlights = async (req, res) => {
         const flights = await fetchData(); // Fetch all flight data
         res.json(flights.length); // Respond with the total count of flights
     } catch (error) {
-        res.status(error.response.status).json({ error: error.response.status }); // Handle any errors
+        console.error(`Error fetching flights count:`, error);
+        res.status(500).json({ error: 'Internal server error' });
     }
 };
 
@@ -52,7 +56,8 @@ const countOutboundFlights = async (req, res) => {
         const outboundFlights = flights.filter(flight => flight.CHCKZN); // Filter for outbound flights
         res.json(outboundFlights.length); // Respond with the count of outbound flights
     } catch (error) {
-        res.status(error.response.status).json({ error: error.response.status }); // Handle any errors
+        console.error(`Error fetching outbound flights count`, error);
+        res.status(500).json({ error: 'Internal server error' });
     }
 };
 
@@ -65,19 +70,24 @@ const countInboundFlights = async (req, res) => {
         const inboundFlights = flights.filter(flight => !flight.CHCKZN); // Filter for inbound flights
         res.json(inboundFlights.length); // Respond with the count of inbound flights
     } catch (error) {
-        res.status(error.response.status).json({ error: error.response.status }); // Handle any errors
+        console.error(`Error fetching inbound flights count:`, error);
+        res.status(500).json({ error: 'Internal server error' });
     }
 };
-
 
 // Controller function to count flights (inbound and outbound) from a specific country
 // This function is called when a GET request is made to /api/flights/country/count
 // accept the country as a query parameter
 const countFlightsFromCountry = async (req, res) => {
     try {
-        const country = req.query.country; // Get the country name from query parameters
+        // Sanitize input and get the country name
+        const country = validator.escape(req.query.country || '');
         if (!country) {
             return res.status(400).json({ error: 'Country name is required' });
+        }
+
+        if (!COUNTRIES_SET.has(country)) {
+            return res.status(400).json({ error: 'Invalid country name' });
         }
 
         const flights = await fetchData(); // Fetch all flight data
@@ -85,7 +95,8 @@ const countFlightsFromCountry = async (req, res) => {
 
         res.json(countryFlights.length); // Respond with the count of flights from the specified country
     } catch (error) {
-        res.status(error.response.status).json({ error: error.response.status }); // Handle any errors
+        console.error(`Error fetching flights from ${country}:`, error);
+        res.status(500).json({ error: 'Internal server error' });
     }
 };
 
@@ -94,9 +105,14 @@ const countFlightsFromCountry = async (req, res) => {
 // This function is called when a GET request is made to /api/flights/country/outbound/count
 const countOutboundFlightsFromCountry = async (req, res) => {
     try {
-        const country = req.query.country; // Get the country name from query parameters
+        // Sanitize input and get the country name
+        const country = validator.escape(req.query.country || '');
         if (!country) {
             return res.status(400).json({ error: 'Country name is required' });
+        }
+
+        if (!COUNTRIES_SET.has(country)) {
+            return res.status(400).json({ error: 'Invalid country name' });
         }
 
         const flights = await fetchData(); // Fetch all flight data
@@ -104,7 +120,8 @@ const countOutboundFlightsFromCountry = async (req, res) => {
 
         res.json(outboundFlights.length); // Respond with the count of outbound flights from the specified country
     } catch (error) {
-        res.status(error.response.status).json({ error: error.response.status }); // Handle any errors
+        console.error(`Error fetching outbound flights from ${country}:`, error);
+        res.status(500).json({ error: 'Internal server error' });
     }
 };
 
@@ -113,9 +130,14 @@ const countOutboundFlightsFromCountry = async (req, res) => {
 // This function is called when a GET request is made to /api/flights/country/inbound/count
 const countInboundFlightsFromCountry = async (req, res) => {
     try {
-        const country = req.query.country; // Get the country name from query parameters
+        // Sanitize input and get the country name
+        const country = validator.escape(req.query.country || '');
         if (!country) {
             return res.status(400).json({ error: 'Country name is required' });
+        }
+
+        if (!COUNTRIES_SET.has(country)) {
+            return res.status(400).json({ error: 'Invalid country name' });
         }
 
         const flights = await fetchData(); // Fetch all flight data
@@ -123,7 +145,8 @@ const countInboundFlightsFromCountry = async (req, res) => {
 
         res.json(inboundFlights.length); // Respond with the count of inbound flights from the specified country
     } catch (error) {
-        res.status(error.response.status).json({ error: error.response.status }); // Handle any errors
+        console.error(`Error fetching inbound flights from ${country}:`, error);
+        res.status(500).json({ error: 'Internal server error' });
     }
 };
 
@@ -147,7 +170,8 @@ const countDelayedFlights = async (req, res) => {
 
         res.json(delayedFlights.length); // Respond with the count of delayed flights
     } catch (error) {
-        res.status(error.response.status).json({ error: error.response.status }); // Handle any errors
+        console.error(`Error fetching delayed flights:`, error);
+        res.status(500).json({ error: 'Internal server error' });
     }
 };
 
@@ -175,7 +199,8 @@ const mostPopularDestination = async (req, res) => {
 
         res.json(mostPopular.city || 'No data available'); // Respond with the most popular city
     } catch (error) {
-        res.status(error.response.status).json({ error: error.response.status }); // Handle any errors
+        console.error(`Error fetching most populer dest:`, error);
+        res.status(500).json({ error: 'Internal server error' });
     }
 };
 
@@ -214,7 +239,8 @@ const findQuickGetawayFlights = async (req, res) => {
 
         res.json(result); // Respond with the found flight pair or an empty object
     } catch (error) {
-        res.status(error.response.status).json({ error: error.response.status }); // Handle any errors
+        console.error(`Error getting quick getaway:`, error);
+        res.status(500).json({ error: 'Internal server error' });
     }
 };
 
